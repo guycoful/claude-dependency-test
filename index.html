@@ -99,10 +99,26 @@ footer{background:var(--ink);color:#bdb6a8;padding:22px 0;font-size:15px}
 
 <h2>מה זה סוכן, ואיך מתקינים</h2>
 <p>כל אחת מ-5 הבדיקות היא סוכן בדיקה אמיתי, לא פרומפט חד פעמי. לכל סוכן יש תפקיד אחד, כלים מוגבלים לקריאה בלבד, שלבי עבודה קבועים ופורמט תוצאה שהוא חייב להחזיר, כולל פסק ירוק או אדום. את הסוכנים מפעילים על הפרויקט שלכם, והם בודקים אותו.</p>
-<div class="card"><h3>התקנה של 5 הסוכנים בפקודה אחת, בתיקיית הפרויקט</h3>
-<div class="pr"><div class="lab"><span>הדביקו בטרמינל</span><button class="cp" type="button">העתק</button></div>
+<div class="card"><h3>3 דרכים להתקין, בחרו אחת</h3>
+<p class="note" style="margin-bottom:10px"><b>1. בלי טרמינל:</b> הורידו את ה-ZIP, פתחו אותו, והעתיקו את תיקיית agents אל התיקייה .claude/agents בפרויקט שלכם. יש בו גם קובץ הסבר בעברית.</p>
+<p style="margin-bottom:14px"><a class="cta" style="margin-top:0" href="claude-dependency-agents.zip" download>הורדת ה-ZIP עם 5 הסוכנים</a></p>
+<p class="note" style="margin-bottom:6px"><b>2. פייתון, בכל מערכת הפעלה:</b> בתיקיית הפרויקט הדביקו שורה אחת.</p>
+<div class="pr"><div class="lab"><span>פייתון, שורה אחת</span><button class="cp" type="button">העתק</button></div>
+<pre class="cmd">python -c "import os,urllib.request as u;[(os.makedirs('.claude/agents',exist_ok=True),u.urlretrieve('https://raw.githubusercontent.com/guycoful/claude-dependency-test/main/agents/%s.md'%n,'.claude/agents/%s.md'%n)) for n in ['quota-check','instructions-check','switch-check','verify-check','ownership-check']]"</pre></div>
+<p class="note" style="margin-bottom:6px"><b>3. טרמינל (macOS או Linux):</b></p>
+<div class="pr"><div class="lab"><span>טרמינל, בתיקיית הפרויקט</span><button class="cp" type="button">העתק</button></div>
 <pre class="cmd">mkdir -p .claude/agents &amp;&amp; for a in quota-check instructions-check switch-check verify-check ownership-check; do curl -fsSL https://raw.githubusercontent.com/guycoful/claude-dependency-test/main/agents/$a.md -o .claude/agents/$a.md; done</pre></div>
-<p class="note">אחרי ההתקנה, ב-Claude Code בקשו: "הפעל את quota-check על הפרויקט". הפקודה /agents מציגה את הסוכנים שהותקנו. הסוכנים עובדים בקריאה בלבד ולא משנים קבצים.</p></div>
+<p class="note">אחרי ההתקנה, ב-Claude Code בקשו: "הפעל את quota-check על הפרויקט". הפקודה /agents מציגה את הסוכנים שהותקנו. הסוכנים עובדים בקריאה בלבד ולא משנים קבצים. אין לכם Claude Code ? ב-ZIP יש תיקייה project-instructions עם אותן הוראות כטקסט, להדבקה בפרויקט ב-Claude.</p></div>
+<div class="card"><h3>מה צריך בסוכן טוב</h3>
+<table>
+<tr><td class="k">תפקיד אחד</td><td>בדיקה אחת לסוכן. סוכן שבודק חמישה דברים מחזיר תשובה מטושטשת.</td></tr>
+<tr><td class="k">כלים מצומצמים</td><td>קריאה בלבד כברירת מחדל. סוכן בדיקה לא צריך לכתוב קבצים.</td></tr>
+<tr><td class="k">שלבים כתובים</td><td>רשימת צעדים, ולא "תבדוק". הסוכן עושה בדיוק מה שכתוב לו.</td></tr>
+<tr><td class="k">פורמט קבוע</td><td>טבלה ופסק ירוק או אדום, כך שאפשר להשוות בין ריצות.</td></tr>
+<tr><td class="k">כלל "לא נמצא"</td><td>סוכן שלא מצא כותב שלא מצא, ולא ממלא מהניחוש.</td></tr>
+<tr><td class="k">תיאור ברור</td><td>שורת description בראש הקובץ היא מה שגורם ל-Claude לבחור בסוכן הנכון.</td></tr>
+</table>
+<p class="note">אלה כללי עבודה שנבנו לסוכנים האלה, ולא תוצאה של מחקר.</p></div>
 <div class="card"><h3>מה הסוכן מחזיר, ומה לא</h3>הסוכן מחזיר טבלה ופסק. הוא לא מחליף את ההחלטה שלכם: בסוכן הבדיקה העצמית הוא רק מכין רשימה, ואתם מסמנים ירוק אחרי שעברתם עליה בעצמכם. לא הרצתי אותם על פרויקטים של אחרים, ולכן בדקו את מה שהם מחזירים.</div>
 
 <h2>5 השאלות והסוכנים</h2>
