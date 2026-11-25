@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>מורידים את Claude, מה נשאר ? | מבחן תלות בספק AI</title>
+<meta name="description" content="5 שאלות על העבודה שלכם עם Claude, וסוכן בדיקה להתקנה לכל אחת, ומה עושים כשיוצא אדום. אם יצאו 3 אדומים ומעלה, הגיע הזמן שנדבר.">
+<meta property="og:title" content="מורידים את Claude, מה נשאר ?">
+<meta property="og:description" content="מבחן של 5 שאלות עם 5 סוכנים להתקנה. 3 אדומים ומעלה, הגיע הזמן שנדבר.">
+<meta property="og:image" content="https://guycoful.github.io/claude-dependency-test/assets/map.png">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--or:#d97757;--or-d:#b85c3c;--ye:#ffd83d;--ink:#1f1e1d;--mut:#5f5a50;--cream:#faf9f5;--line:#e6dfd2;--gr:#1fb865;--rd:#e03a3a}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:hidden}
+body{font-family:"Assistant",system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;font-size:18px}
+a{color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+.hero{background:var(--or);color:#fff;padding:48px 0 0;position:relative;overflow:hidden}
+.hero .wrap{position:relative;min-height:430px;padding-bottom:30px}
+.txt{max-width:500px}
+.kick{font-weight:800;color:#fff3e8;font-size:18px}
+h1{font-size:clamp(44px,8vw,72px);line-height:1.02;font-weight:800;margin-top:10px;letter-spacing:-1px}
+h1 .c{color:var(--ink)}
+.box{display:inline-block;background:var(--ye);color:var(--ink);padding:0 18px;border-radius:14px;margin-top:10px}
+.lead{font-size:clamp(20px,3.6vw,28px);font-weight:800;margin-top:22px;max-width:560px;line-height:1.25}
+.cta{display:inline-block;margin-top:22px;background:var(--ye);color:var(--ink);font-weight:800;font-size:19px;padding:14px 26px;border-radius:14px;text-decoration:none}
+.cta:hover{filter:brightness(.96)}
+.cta.alt{background:#fff;margin-inline-start:8px}
+.guy{position:absolute;left:0;bottom:0;height:min(430px,60vw);pointer-events:none}
+h2{font-size:clamp(28px,5vw,40px);font-weight:800;line-height:1.15;margin:56px 0 14px}
+.sec p{margin-bottom:14px}
+.card{background:#fff;border:2px solid var(--line);border-radius:16px;padding:20px 22px;margin:14px 0}
+.card h3{font-size:19px;color:var(--or-d);margin-bottom:6px}
+.steps{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:16px}
+.q{background:#fff;border:2px solid var(--line);border-radius:18px;padding:22px;margin:22px 0}
+.qh{display:flex;gap:14px;align-items:center;margin-bottom:6px}
+.n{flex:none;width:44px;height:44px;border-radius:50%;background:var(--ye);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px}
+.qt{font-size:clamp(21px,4vw,26px);font-weight:800;line-height:1.25}
+.why{color:var(--mut);margin:8px 0 12px}
+.how{margin:10px 0}
+.how b{color:var(--or-d)}
+.gr2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.g,.r{border-radius:12px;padding:12px 14px;color:#fff;font-weight:700;font-size:17px;line-height:1.35}
+.g{background:var(--gr)}.r{background:var(--rd)}
+.g small,.r small{display:block;font-size:13px;font-weight:800;opacity:.92}
+.fix{background:var(--cream);border:2px dashed var(--line);border-radius:12px;padding:12px 14px;margin-top:12px}
+.fix b{color:var(--or-d)}
+.pr{margin:14px 0}
+.pr .lab{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:15px;color:var(--mut);margin-bottom:6px}
+.cp{font-family:inherit;font-weight:800;font-size:15px;background:var(--ink);color:#fff;border:0;border-radius:10px;padding:7px 14px;cursor:pointer}
+.cp.ok{background:var(--gr)}
+pre{white-space:pre-wrap;word-wrap:break-word;background:#1f1e1d;color:#f3eee6;border-radius:12px;padding:14px 16px;font-size:15.5px;line-height:1.55;font-family:"Assistant",monospace}
+pre.cmd{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px}
+.score{position:sticky;bottom:14px;z-index:5;background:var(--ink);color:#fff;border-radius:16px;padding:14px 18px;margin:30px 0;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.score .t{font-weight:800;font-size:19px}
+.score .sw{display:flex;gap:10px 14px;flex-wrap:wrap}
+.sw button{font-family:inherit;font-weight:800;border:0;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:14px;background:#3a3834;color:#fff}
+.sw button.on-g{background:var(--gr)}.sw button.on-r{background:var(--rd)}
+.res{display:none;background:var(--or);color:#fff;border-radius:18px;padding:26px;margin:20px 0;text-align:center}
+.res.show{display:block}
+.res .big{font-size:clamp(26px,5vw,38px);font-weight:800;line-height:1.15}
+.res .big .box{margin-top:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+td,th{border-bottom:1px solid var(--line);padding:10px 8px;text-align:right;vertical-align:top;font-size:17px}
+th{color:var(--or-d)}
+.fin{background:var(--or);color:#fff;margin-top:70px;padding:50px 0 0;position:relative;overflow:hidden}
+.fin .wrap{min-height:360px;position:relative}
+.fin h2{margin-top:0}
+.fin .guy{height:min(330px,55vw)}
+footer{background:var(--ink);color:#bdb6a8;padding:22px 0;font-size:15px}
+.note{font-size:15px;color:var(--mut)}
+@media(max-width:560px){.score{padding:12px 14px}.score .t{font-size:16px}.gr2{grid-template-columns:1fr}.hero h1{letter-spacing:0}.guy{opacity:.95}.hero .wrap{padding-bottom:230px}.fin .wrap{padding-bottom:210px}}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+ <div class="txt"><div class="kick">מדריך למבחן תלות בספק AI</div>
+ <h1>מורידים את <span class="c">Claude</span><br><span class="box">מה נשאר ?</span></h1>
+ <p class="lead">5 שאלות על העבודה שלכם עם Claude. בכל אחת סמנו ירוק או אדום.</p>
+ <a class="cta" href="https://wa.me/972546232063?text=%D7%94%D7%99%D7%99%20%D7%92%D7%99%D7%90%2C%20%D7%A2%D7%A9%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%9E%D7%91%D7%97%D7%9F%20%D7%94%D7%AA%D7%9C%D7%95%D7%AA%20%D7%91-Claude%20%D7%95%D7%99%D7%A6%D7%90%D7%95%20%D7%9C%D7%99%20%D7%90%D7%93%D7%95%D7%9E%D7%99%D7%9D.%20%D7%91%D7%95%D7%90%20%D7%A0%D7%93%D7%91%D7%A8." target="_blank" rel="noopener">אם יצאו 3 אדומים ומעלה, הגיע הזמן שנדבר</a></div>
+ <img class="guy" src="assets/guy.png" alt="גיא כהן מצביע על המבחן">
+</div></header>
+
+<main class="wrap sec">
+
+<h2>איך עושים את זה, 10 דקות</h2>
+<p>קחו משימה אמיתית שעשיתם השבוע עם Claude. לא משימה היפותטית. עברו עליה עם 5 השאלות, ובכל שאלה סמנו ירוק או אדום בכרטיסים למטה. המונה בתחתית הדף סופר אדומים.</p>
+<div class="steps">
+ <div class="card"><h3>1. בחרו משימה</h3>משהו שיצר תוצאה: מסמך, קוד, ניתוח או מייל.</div>
+ <div class="card"><h3>2. ענו על 5 שאלות</h3>לכל שאלה יש סוכן בדיקה שמותקן בפקודה אחת ובודק את הפרויקט שלכם.</div>
+ <div class="card"><h3>3. ספרו אדומים</h3>3 ומעלה, ויש לכם על מה לדבר. פחות מזה, תקנו ותמשיכו.</div>
+</div>
+<div class="card"><h3>מאיפה המבחן</h3>יסמין לוקץ', משקיעת הון סיכון ומייסדת Code for Israel, שואלת יזמים היום "איפה נגמר המודל ומתחילה הטכנולוגיה שלך". המבחן לוקח את השאלה הזאת לכל מי שעובד עם Claude, גם בלי מוצר ובלי פרויקט.</div>
+
+<h2>מה זה סוכן, ואיך מתקינים</h2>
+<p>כל אחת מ-5 הבדיקות היא סוכן בדיקה אמיתי, לא פרומפט חד פעמי. לכל סוכן יש תפקיד אחד, כלים מוגבלים לקריאה בלבד, שלבי עבודה קבועים ופורמט תוצאה שהוא חייב להחזיר, כולל פסק ירוק או אדום. את הסוכנים מפעילים על הפרויקט שלכם, והם בודקים אותו.</p>
+<div class="card"><h3>התקנה של 5 הסוכנים בפקודה אחת, בתיקיית הפרויקט</h3>
+<div class="pr"><div class="lab"><span>הדביקו בטרמינל</span><button class="cp" type="button">העתק</button></div>
+<pre class="cmd">mkdir -p .claude/agents &amp;&amp; for a in quota-check instructions-check switch-check verify-check ownership-check; do curl -fsSL https://raw.githubusercontent.com/guycoful/claude-dependency-test/main/agents/$a.md -o .claude/agents/$a.md; done</pre></div>
+<p class="note">אחרי ההתקנה, ב-Claude Code בקשו: "הפעל את quota-check על הפרויקט". הפקודה /agents מציגה את הסוכנים שהותקנו. הסוכנים עובדים בקריאה בלבד ולא משנים קבצים.</p></div>
+<div class="card"><h3>מה הסוכן מחזיר, ומה לא</h3>הסוכן מחזיר טבלה ופסק. הוא לא מחליף את ההחלטה שלכם: בסוכן הבדיקה העצמית הוא רק מכין רשימה, ואתם מסמנים ירוק אחרי שעברתם עליה בעצמכם. לא הרצתי אותם על פרויקטים של אחרים, ולכן בדקו את מה שהם מחזירים.</div>
+
+<h2>5 השאלות והסוכנים</h2>
+
+<section class="q" data-q="1">
+ <div class="qh"><div class="n">1</div><div class="qt">אם נגמרת המכסה, האם העבודה שלך ממשיכה ?</div></div>
+ <div class="why">השאלה בודקת מה תלוי ב-Claude ומה עובד גם בלעדיו. מכסה יכולה להיגמר באמצע משימה, ועבודה שלא ממשיכה היא הסיכון הראשון.</div>
+ <div class="how"><b>איך בודקים, 2 דקות:</b> שאלו מה הייתם עושים עם המשימה אם Claude לא זמין עד סוף היום. אם התשובה היא "מחכים", סמנו אדום.</div>
+ <div class="pr"><div class="lab"><span>סוכן בדיקת המכסה, הקובץ agents/quota-check.md</span><button class="cp" type="button">העתק את הסוכן</button></div>
+<pre>---
+name: quota-check
+description: בודק מה קורה לעבודה בפרויקט אם Claude לא זמין, למשל כשהמכסה נגמרת. מפעילים כשרוצים לדעת אילו משימות חוזרות נעצרות. קורא בלבד, לא משנה קבצים.
+tools: Read, Grep, Glob, Bash
+---
+אתה סוכן בדיקה של בדיקה אחת: האם העבודה בפרויקט ממשיכה כש-Claude לא זמין.
+
+עבודה בקריאה בלבד. אל תכתוב ואל תשנה קבצים.
+
+שלבים:
+1. אתר עד 5 משימות חוזרות בפרויקט. חפש ב-README, בסקריפטים (package.json, Makefile, scripts/), ב-CLAUDE.md וב-docs. אל תמציא משימה שלא מצאת במקור.
+2. לכל משימה בדוק אם קיים בריף: קובץ שכתוב בו המטרה, החומרים, הכללים, פורמט התוצאה ואיך בודקים אותה, כך שאדם או כלי אחר יוכלו להמשיך בלי לשאול.
+3. לכל משימה בלי בריף כתוב טיוטה של 5 שורות. אל תשמור אותה בקובץ.
+
+תוצאה, בפורמט הזה בלבד:
+- טבלה: משימה, איפה נמצאה, יש בריף (כן/לא), טיוטת בריף.
+- פסק: ירוק אם לכל המשימות יש בריף שאפשר להמשיך ממנו, אחרת אדום, ושורה אחת למה.
+- מה לא נמצא: כתוב במפורש. אם לא מצאת משימות, כתוב &quot;לא נמצאו משימות&quot;, ואל תמלא.
+</pre>
+<p class="note" style="margin-top:6px">שמרו כ-.claude/agents/quota-check.md בפרויקט, או התקינו את כל החמישה בפקודה אחת למעלה. לא משתמשים ב-Claude Code ? הדביקו רק את ההוראות שמתחת לשורה המפרידה השנייה כהוראות פרויקט ב-Claude.</p></div>
+ <div class="gr2"><div class="g"><small>ירוק</small>העבודה ממשיכה, ידנית או בכלי אחר</div><div class="r"><small>אדום</small>העבודה נעצרת עד שהמכסה חוזרת</div></div>
+ <div class="fix"><b>אם יצא אדום:</b> שמרו את הבריף שיצא בקובץ אצלכם. מהיום לכל משימה חוזרת יש בריף כזה.</div>
+</section>
+
+<section class="q" data-q="2">
+ <div class="qh"><div class="n">2</div><div class="qt">איפה שמורים הקבצים וההנחיות שבנית ?</div></div>
+ <div class="why">השאלה בודקת אם מה שבניתם נשמר אצלכם או רק בתוך Claude. הנחיות ומסמכים שחיים רק בתוך שיחות ופרויקטים בכלי לא עוברים איתכם לכלי אחר.</div>
+ <div class="how"><b>איך בודקים, 2 דקות:</b> פתחו את התיקייה שלכם בכונן או בענן וחפשו שם את ההנחיות והמסמכים שהזנתם. אם הם לא שם, סמנו אדום.</div>
+ <div class="pr"><div class="lab"><span>סוכן בדיקת ההנחיות, הקובץ agents/instructions-check.md</span><button class="cp" type="button">העתק את הסוכן</button></div>
+<pre>---
+name: instructions-check
+description: בודק איפה ההנחיות והכללים של העבודה עם Claude שמורים, בתיקייה שלכם בגיט או רק בתוך הכלי ובתיקיית הבית. קורא בלבד.
+tools: Read, Grep, Glob, Bash
+---
+אתה סוכן בדיקה של בדיקה אחת: האם ההנחיות שבנית עם Claude שמורות אצלך, בתיקייה שאתה שולט בה.
+
+עבודה בקריאה בלבד. אל תריץ פקודות שמשנות משהו, כולל git add ו-git commit.
+
+שלבים:
+1. אתר קובצי הנחיות בפרויקט: CLAUDE.md, AGENTS.md, .claude/ (agents, skills, commands, settings), ותיקיות docs או prompts.
+2. הרץ git ls-files על כל אחד, ובדוק אם הוא עוקב בגיט או לא. הרץ git log -1 --format=%cs על כל קובץ שנמצא כדי לראות מתי עודכן.
+3. בדוק אם ההנחיות מפנות לקבצים מחוץ לפרויקט, למשל בתיקיית הבית (~/.claude/CLAUDE.md). רשום אותם, כי הם לא עוברים עם הפרויקט.
+4. אל תניח שהנחיות שחיות רק בשיחות או בהגדרות הפרויקט בתוך הממשק קיימות. אינך יכול לראות אותן, ולכן כתוב אותן כ&quot;לא נבדק&quot;.
+
+תוצאה, בפורמט הזה בלבד:
+- טבלה: קובץ, בגיט (כן/לא), עודכן לאחרונה, בתוך הפרויקט (כן/לא).
+- פסק: ירוק אם כל ההנחיות הקיימות עוקבות בגיט ובתוך הפרויקט, אחרת אדום, ושורה אחת למה.
+- פקודות מוצעות לתיקון (git add לקבצים שלא עוקבים), כטקסט בלבד, בלי להריץ.
+- לא נבדק: הנחיות בתוך הממשק של Claude.
+</pre>
+<p class="note" style="margin-top:6px">שמרו כ-.claude/agents/instructions-check.md בפרויקט, או התקינו את כל החמישה בפקודה אחת למעלה. לא משתמשים ב-Claude Code ? הדביקו רק את ההוראות שמתחת לשורה המפרידה השנייה כהוראות פרויקט ב-Claude.</p></div>
+ 
+ <div class="gr2"><div class="g"><small>ירוק</small>העותק המלא אצלכם, בתיקייה שאתם שולטים בה</div><div class="r"><small>אדום</small>ההנחיות קיימות רק בתוך Claude</div></div>
+ <div class="fix"><b>אם יצא אדום:</b> שמרו את הקובץ שיצא בתיקייה שלכם עם תאריך. מהיום מעדכנים קודם את הקובץ ורק אחר כך את הכלי.</div>
+</section>
+
+<section class="q" data-q="3">
+ <div class="qh"><div class="n">3</div><div class="qt">כמה זמן ייקח להחליף את Claude לצמיתות במודל אחר ?</div></div>
+ <div class="why">השאלה על החלפה קבועה, לא על מעבר זמני עד שהמכסה חוזרת (זו שאלה 1). כאן בודקים כמה העבודה שלכם קשורה לכלי עצמו.</div>
+ <div class="how"><b>איך בודקים, 2 דקות:</b> קחו משימה אחת והעריכו כמה זמן ייקח להפעיל אותה בכלי אחר, למשל ChatGPT או Gemini, ולוודא שהתוצאה באותה איכות. אפשר גם לנסות בפועל.</div>
+ <div class="pr"><div class="lab"><span>סוכן בדיקת ההחלפה, הקובץ agents/switch-check.md</span><button class="cp" type="button">העתק את הסוכן</button></div>
+<pre>---
+name: switch-check
+description: מעריך כמה זמן ייקח להחליף את Claude לצמיתות בכלי אחר, לפי כמה מהקבצים והכללים בפרויקט כתובים במיוחד ל-Claude. קורא בלבד.
+tools: Read, Grep, Glob, Bash
+---
+אתה סוכן בדיקה של בדיקה אחת: כמה זמן ייקח להחליף את Claude לצמיתות בכלי או במודל אחר.
+
+עבודה בקריאה בלבד. אל תכתוב ואל תשנה קבצים.
+
+שלבים:
+1. אתר מה בפרויקט קשור ל-Claude: .claude/agents, .claude/skills, .claude/commands, hooks ב-settings.json, הגדרות MCP, פקודות slash בטקסט ההנחיות, והפניות לכלים כמו Task, Read או Bash בתוך הנחיות.
+2. סווג כל פריט: נייד (טקסט הנחיות רגיל שאפשר להדביק בכל כלי) או קשור (צריך כתיבה מחדש בכלי אחר).
+3. ספור פריטים קשורים והערך זמן לפי כלל גס: עד 3 קשורים הם שעות, 4 עד 10 הם ימים, יותר מ-10 הם שבועות. ציין שזו הערכה גסה ולא מדידה.
+4. הכן חבילה ניידת: את הטקסט של ההנחיות הניידות כקטע אחד שאפשר להדביק בכלי אחר. הדפס אותה, אל תשמור אותה בקובץ.
+
+תוצאה, בפורמט הזה בלבד:
+- טבלה: פריט, נייד או קשור, למה.
+- הערכת זמן (שעות, ימים או שבועות) ושורה על הכלל שבו השתמשת.
+- פסק: ירוק אם שעות, אדום אם שבועות, ואם ימים כתוב &quot;באמצע&quot; ותן את ההכרעה למשתמש.
+- החבילה הניידת.
+- 5 קריטריונים שהמשתמש בודק בעין כדי לדעת שהאיכות בכלי השני לא ירדה.
+</pre>
+<p class="note" style="margin-top:6px">שמרו כ-.claude/agents/switch-check.md בפרויקט, או התקינו את כל החמישה בפקודה אחת למעלה. לא משתמשים ב-Claude Code ? הדביקו רק את ההוראות שמתחת לשורה המפרידה השנייה כהוראות פרויקט ב-Claude.</p></div>
+ <div class="gr2"><div class="g"><small>ירוק</small>שעות</div><div class="r"><small>אדום</small>שבועות</div></div>
+ <p class="note">ימים הם באמצע. הקו בין ירוק לאדום הוא הצעה, ואפשר להזיז אותו לפי מה שחשוב לכם.</p>
+ <div class="fix"><b>אם יצא אדום:</b> רשמו מה בדיוק לוקח את הזמן: הנחיות שכתובות לכלי מסוים, פורמטים, חיבורים או תיקונים ידניים. כל פריט כזה הוא נקודת תלות שאפשר לפרק.</div>
+</section>
+
+<section class="q" data-q="4">
+ <div class="qh"><div class="n">4</div><div class="qt">האם אתה באמת בודק בעצמך את התוצאה ?</div></div>
+ <div class="why">זו השאלה שתעורר ויכוח. כל הרעיון של סוכן הוא שהוא עושה את העבודה במקומך, ולכן בדיקה נשמעת כמו ויתור על הרווח. ובכל זאת, מי שלא בודק לא יודע מתי הסוכן טעה.</div>
+ <div class="how"><b>איך בודקים, 2 דקות:</b> בפעם הבאה שתקבלו תוצאה, לפני שאתם משתמשים בה, שאלו: האם אני יכול לבדוק אותה בעצמי, בלי לשאול את Claude שוב ? אם התשובה היא "לא, אני סומך", סמנו אדום.</div>
+ <div class="pr"><div class="lab"><span>סוכן הבדיקה העצמית, הקובץ agents/verify-check.md</span><button class="cp" type="button">העתק את הסוכן</button></div>
+<pre>---
+name: verify-check
+description: סוקר את השינוי האחרון כאילו נכתב על ידי מישהו אחר, ומכין רשימת בדיקה של 5 דקות שאדם מבצע בעצמו. מפעילים אחרי ש-Claude סיים משימה ולפני merge.
+tools: Read, Grep, Glob, Bash
+---
+אתה סוכן בדיקה שלא כתב את הקוד. תפקידך להכין לאדם רשימת בדיקה, לא לאשר את העבודה במקומו.
+
+עבודה בקריאה בלבד, חוץ מהרצת בדיקות קיימות אם הפקודה ברורה (למשל npm test או pytest). אל תתקן קוד.
+
+שלבים:
+1. קרא את השינוי האחרון: git diff, ואם אין שינויים לא שמורים, git show HEAD. קרא גם את הודעת הקומיט.
+2. מנה כל טענה שהשינוי עושה (מה אמור לקרות) ואיפה היא נבדקת. אם יש פקודת בדיקות ברורה, הרץ אותה ורשום מה יצא.
+3. מצא: מספרים וקבועים שנכנסו לקוד, הנחות שלא נאמרו במפורש, נתיבי טיפול בשגיאות שלא נבדקו, והמקום שבו אתה הכי פחות בטוח.
+4. אל תכתוב שהשינוי תקין. כתוב רק מה נבדק ומה לא.
+
+תוצאה, בפורמט הזה בלבד:
+- טענות: רשימה, ולכל אחת &quot;נבדקה בבדיקה&quot; או &quot;לא נבדקה&quot;.
+- תוצאת הבדיקות שרצו, או &quot;לא הורצו&quot; ולמה.
+- רשימת בדיקה של 5 דקות לאדם: מספר אחד מול מקור, דוגמה אחת לעבור עליה, וכלל אחד שאומר מתי השינוי לא יוצא הלאה.
+- סיום קבוע: &quot;סמן ירוק רק אחרי שעברת על הרשימה בעצמך&quot;.
+</pre>
+<p class="note" style="margin-top:6px">שמרו כ-.claude/agents/verify-check.md בפרויקט, או התקינו את כל החמישה בפקודה אחת למעלה. לא משתמשים ב-Claude Code ? הדביקו רק את ההוראות שמתחת לשורה המפרידה השנייה כהוראות פרויקט ב-Claude.</p></div>
+ <div class="gr2"><div class="g"><small>ירוק</small>בודק כל פעם, ויודע איך</div><div class="r"><small>אדום</small>לא תמיד, או רק סומך</div></div>
+ <div class="fix"><b>אם יצא אדום:</b> קבעו בדיקה קבועה וקצרה: מספר אחד שבודקים מול מקור, דוגמה אחת שעוברים עליה, וכלל אחד שאומר מתי תוצאה לא יוצאת הלאה. בדיקה של דקה מאפשרת להמשיך להעביר ל-Claude עוד עבודה.</div>
+</section>
+
+<section class="q" data-q="5">
+ <div class="qh"><div class="n">5</div><div class="qt">מי עושה את רוב העבודה, אתה או Claude ?</div></div>
+ <div class="why">השאלה בודקת מה נשאר שלכם. אם ההחלטות, הכללים והשיפוט באים מכם, Claude הוא כלי עבודה. אם הכול בא ממנו, התפקיד שלכם הוא להעביר את התוצאה הלאה.</div>
+ <div class="how"><b>איך בודקים, 2 דקות:</b> קחו משהו שיצרתם השבוע וסמנו בשני צבעים מה נבע מהחלטות שלכם (מטרה, כללים, תיקונים) ומה Claude עשה לבד. הצבע שמכסה יותר מחצי הוא התשובה.</div>
+ <div class="pr"><div class="lab"><span>סוכן בדיקת הבעלות, הקובץ agents/ownership-check.md</span><button class="cp" type="button">העתק את הסוכן</button></div>
+<pre>---
+name: ownership-check
+description: מודד כמה מהעבודה בפרויקט נעשתה עם Claude וכמה על ידי אדם, לפי היסטוריית הגיט, ומה מההחלטות כתוב בידי אדם. קורא בלבד.
+tools: Read, Grep, Glob, Bash
+---
+אתה סוכן בדיקה של בדיקה אחת: מי עושה את רוב העבודה, האדם או Claude.
+
+עבודה בקריאה בלבד. אל תכתוב ואל תשנה קבצים.
+
+שלבים:
+1. ב-30 הימים האחרונים ספור קומיטים: הכל, וכאלה שמופיע בהם &quot;Co-Authored-By: Claude&quot; בגוף ההודעה. (git log --since=30.days --format=%B%x00 וספירה.)
+2. חשב את החלק היחסי. ציין כמה קומיטים נבדקו.
+3. אתר קבצי החלטות וכללים (CLAUDE.md, docs/DECISIONS, docs/PROJECT_STATE) וספור כמה קומיטים נגעו בהם ובלי הטריילר של Claude. אלה ההחלטות שנכתבו בידי אדם.
+4. הסתייגות חובה: אם הטריילר מכובה בהגדרות הכלי, הספירה נמוכה מהאמת. ציין שאי אפשר לדעת מהגיט אם הטריילר היה פעיל.
+
+תוצאה, בפורמט הזה בלבד:
+- מספרים: קומיטים בסך הכל, קומיטים עם Claude, אחוז.
+- כמה קומיטים נגעו בקבצי החלטות ובלי Claude.
+- פסק גס: אדום אם יותר ממחצית הקומיטים נעשו עם Claude וגם אין קומיטים על קבצי החלטות בידי אדם, אחרת ירוק. כתוב שזה כלל גס.
+- מה לא ידוע: תוכן ההחלטות שהאדם קיבל בשיחות ולא כתב.
+</pre>
+<p class="note" style="margin-top:6px">שמרו כ-.claude/agents/ownership-check.md בפרויקט, או התקינו את כל החמישה בפקודה אחת למעלה. לא משתמשים ב-Claude Code ? הדביקו רק את ההוראות שמתחת לשורה המפרידה השנייה כהוראות פרויקט ב-Claude.</p></div>
+ <div class="gr2"><div class="g"><small>ירוק</small>אני</div><div class="r"><small>אדום</small>Claude</div></div>
+ <div class="fix"><b>אם יצא אדום:</b> כתבו בעצמכם את הקריטריונים לפני שאתם מבקשים: מה נחשב טוב, מה אסור, ומה חייב להופיע. ההחלטה על מה טוב נשארת אצלכם, וההרצה נשארת אצלו.</div>
+</section>
+
+<h2>טבלת תיקון מהירה</h2>
+<table>
+ <tr><th>שאלה</th><th>אם יצא אדום, עושים היום</th></tr>
+ <tr><td>1. מכסה</td><td>בריף של 5 שורות לכל משימה חוזרת</td></tr>
+ <tr><td>2. קבצים והנחיות</td><td>קובץ הנחיות אחד בתיקייה שלכם</td></tr>
+ <tr><td>3. החלפה</td><td>רשימת הדברים שמחזיקים אתכם בכלי</td></tr>
+ <tr><td>4. בדיקה</td><td>בדיקה קבועה של דקה לפני שליחה הלאה</td></tr>
+ <tr><td>5. מי עושה</td><td>כותבים את הקריטריונים לפני הבקשה</td></tr>
+</table>
+
+<div class="score" id="score">
+ <div class="t" id="sc">סימנתם 0 אדומים מתוך 5</div>
+ <div class="sw" id="sw"></div>
+</div>
+
+<div class="res" id="res">
+ <div class="big">אם יצאו 3 אדומים ומעלה,<br><span class="box">הגיע הזמן שנדבר</span></div>
+ <p style="margin-top:14px"><a class="cta" href="https://wa.me/972546232063?text=%D7%94%D7%99%D7%99%20%D7%92%D7%99%D7%90%2C%20%D7%A2%D7%A9%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%9E%D7%91%D7%97%D7%9F%20%D7%94%D7%AA%D7%9C%D7%95%D7%AA%20%D7%91-Claude%20%D7%95%D7%99%D7%A6%D7%90%D7%95%20%D7%9C%D7%99%20%D7%90%D7%93%D7%95%D7%9E%D7%99%D7%9D.%20%D7%91%D7%95%D7%90%20%D7%A0%D7%93%D7%91%D7%A8." target="_blank" rel="noopener">שלחו לי הודעה בוואטסאפ</a> <a class="cta alt" href="https://chat.whatsapp.com/DHnMopzm1sF02RR4y6ej5j?mode=gi_t" target="_blank" rel="noopener">הצטרפו לקבוצה</a></p>
+</div>
+
+<p class="note" style="margin-top:30px"><b>מה לא כתוב כאן:</b> ההצעות "אם יצא אדום", הקו בין שעות לשבועות וכללי הפסק של הסוכנים הם המלצות עבודה, ולא תוצאות של מחקר. הן לא נבדקו על קבוצת משתמשים. הסוכנים מחזירים הערכות, ולכן בדקו את מה שהם מחזירים.</p>
+</main>
+
+<section class="fin" id="talk"><div class="wrap sec">
+ <h2>הגיע הזמן שנדבר ?</h2>
+ <p style="font-size:22px;max-width:560px;font-weight:700">3 אדומים ומעלה אומר שיש תלות שכדאי לפרק לפני שהיא עולה לכם. אשמח לעבור על התוצאות שלכם ולבנות איתכם תוכנית.</p>
+ <a class="cta" href="https://wa.me/972546232063?text=%D7%94%D7%99%D7%99%20%D7%92%D7%99%D7%90%2C%20%D7%A2%D7%A9%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%9E%D7%91%D7%97%D7%9F%20%D7%94%D7%AA%D7%9C%D7%95%D7%AA%20%D7%91-Claude%20%D7%95%D7%99%D7%A6%D7%90%D7%95%20%D7%9C%D7%99%20%D7%90%D7%93%D7%95%D7%9E%D7%99%D7%9D.%20%D7%91%D7%95%D7%90%20%D7%A0%D7%93%D7%91%D7%A8." target="_blank" rel="noopener">שלחו לי הודעה בוואטסאפ</a> <a class="cta alt" href="https://chat.whatsapp.com/DHnMopzm1sF02RR4y6ej5j?mode=gi_t" target="_blank" rel="noopener">הצטרפו לקבוצה</a>
+ <img class="guy" src="assets/guy.png" alt="">
+</div></section>
+
+<footer><div class="wrap">גיא כהן, AI ואוטומציה. המבחן נולד משאלה שיסמין לוקץ' שואלת יזמים.</div></footer>
+
+<script>
+(function(){
+ var state={};
+ var qs=document.querySelectorAll('.q');
+ var sw=document.getElementById('sw');
+ qs.forEach(function(q){
+  var id=q.getAttribute('data-q');
+  var box=document.createElement('div');box.style.display='flex';box.style.gap='4px';box.style.alignItems='center';
+  var lab=document.createElement('span');lab.textContent=id;lab.style.fontWeight='800';lab.style.marginLeft='4px';
+  var g=document.createElement('button');g.type='button';g.textContent='ירוק';
+  var r=document.createElement('button');r.type='button';r.textContent='אדום';
+  function upd(){g.className=state[id]==='g'?'on-g':'';r.className=state[id]==='r'?'on-r':'';
+   var n=0;for(var k in state){if(state[k]==='r')n++}
+   document.getElementById('sc').textContent='סימנתם '+n+' אדומים מתוך 5';
+   document.getElementById('res').className='res'+(n>=3?' show':'');}
+  g.onclick=function(){state[id]=state[id]==='g'?null:'g';upd();};
+  r.onclick=function(){state[id]=state[id]==='r'?null:'r';upd();};
+  box.appendChild(lab);box.appendChild(g);box.appendChild(r);sw.appendChild(box);
+ });
+ document.querySelectorAll('.cp').forEach(function(b){
+  b.onclick=function(){
+   var pre=b.closest('.pr').querySelector('pre');
+   var t=pre.innerText;
+   function done(){b.textContent='הועתק';b.className='cp ok';setTimeout(function(){b.textContent='העתק';b.className='cp'},1800);}
+   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){fallback(t,done)});}else{fallback(t,done);}
+  };
+ });
+ function fallback(t,done){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(a);}
+})();
+</script>
+</body>
+</html>
