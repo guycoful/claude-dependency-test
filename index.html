@@ -104,11 +104,11 @@ footer{background:var(--ink);color:#bdb6a8;padding:22px 0;font-size:15px}
 <p style="margin-bottom:14px"><a class="cta" style="margin-top:0" href="claude-dependency-agents.zip" download>הורדת ה-ZIP עם 5 הסוכנים</a></p>
 <p class="note" style="margin-bottom:6px"><b>2. פייתון, בכל מערכת הפעלה:</b> בתיקיית הפרויקט הדביקו שורה אחת.</p>
 <div class="pr"><div class="lab"><span>פייתון, שורה אחת</span><button class="cp" type="button">העתק</button></div>
-<pre class="cmd">python -c "import os,urllib.request as u;[(os.makedirs('.claude/agents',exist_ok=True),u.urlretrieve('https://raw.githubusercontent.com/guycoful/claude-dependency-test/main/agents/%s.md'%n,'.claude/agents/%s.md'%n)) for n in ['quota-check','instructions-check','switch-check','verify-check','ownership-check']]"</pre></div>
+<pre class="cmd">python -c "import os,urllib.request as u;U='https://raw.githubusercontent.com/guycoful/claude-dependency-test/main/agents/';os.makedirs('.claude/agents',exist_ok=True);[u.urlretrieve(U+n+'.md','.claude/agents/'+n+'.md') for n in ['quota-check','instructions-check','switch-check','verify-check','ownership-check'] if not os.path.exists('.claude/agents/'+n+'.md')]"</pre></div>
 <p class="note" style="margin-bottom:6px"><b>3. טרמינל (macOS או Linux):</b></p>
 <div class="pr"><div class="lab"><span>טרמינל, בתיקיית הפרויקט</span><button class="cp" type="button">העתק</button></div>
-<pre class="cmd">mkdir -p .claude/agents &amp;&amp; for a in quota-check instructions-check switch-check verify-check ownership-check; do curl -fsSL https://raw.githubusercontent.com/guycoful/claude-dependency-test/main/agents/$a.md -o .claude/agents/$a.md; done</pre></div>
-<p class="note">אחרי ההתקנה, ב-Claude Code בקשו: "הפעל את quota-check על הפרויקט". הפקודה /agents מציגה את הסוכנים שהותקנו. הסוכנים עובדים בקריאה בלבד ולא משנים קבצים. אין לכם Claude Code ? ב-ZIP יש תיקייה project-instructions עם אותן הוראות כטקסט, להדבקה בפרויקט ב-Claude.</p></div>
+<pre class="cmd">mkdir -p .claude/agents &amp;&amp; for a in quota-check instructions-check switch-check verify-check ownership-check; do [ -e .claude/agents/$a.md ] || curl -fsSL https://raw.githubusercontent.com/guycoful/claude-dependency-test/main/agents/$a.md -o .claude/agents/$a.md; done</pre></div>
+<p class="note">אחרי ההתקנה, ב-Claude Code בקשו: "הפעל את quota-check על הפרויקט". הפקודה /agents מציגה את הסוכנים שהותקנו. ההתקנה לא דורסת קובץ קיים באותו שם, והיא מדלגת עליו. הסוכנים עובדים בקריאה בלבד ולא משנים קבצים. אין לכם Claude Code ? ב-ZIP יש תיקייה project-instructions עם אותן הוראות כטקסט, להדבקה בפרויקט ב-Claude.</p></div>
 <div class="card"><h3>מה צריך בסוכן טוב</h3>
 <table>
 <tr><td class="k">תפקיד אחד</td><td>בדיקה אחת לסוכן. סוכן שבודק חמישה דברים מחזיר תשובה מטושטשת.</td></tr>
